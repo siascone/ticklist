@@ -1,0 +1,93 @@
+﻿@page "/ticks"
+
+<PageTitle>Ticks</PageTitle>
+
+<h1>My Ticks</h1>
+
+<h2>Enter a new Tick</h2>
+<label>Crag Name 
+    <input @bind="crag"/>
+</label>
+<br>
+<label>Route Name 
+    <input @bind="route"/>
+</label>
+<br>
+<label>Rating
+    <input @bind="rating"/>
+</label>
+<br>
+<label>On Site
+    <input type='checkbox' value='false' @bind="onSite"/>
+</label>
+<br>
+<label>Send
+    <input type='checkbox' value='false' @bind="send"/>
+</label>
+<br>
+<label>Fall Count
+    <input type="range" min="0" max="100" @bind="numFalls" @bind:event="oninput"/> @numFalls
+</label>
+<br>
+<label>Attempt Count
+    <input type="range" min="0" max="100" @bind="numAttempts" @bind:event="oninput"/> @numAttempts
+</label>
+<br>
+<label>Send Count
+    <input type="range" min="0" max="100" @bind="numSends" @bind:event="oninput"/> @numSends
+</label>
+<br>
+<button @onclick="AddTick">Add Tick</button>
+
+<ul>
+    @foreach (var tick in ticks)
+    {
+        <h3>Route: @tick.Route</h3>
+        <ul>
+            <li>Crag: @tick.Crag</li>
+            <li>Rating: @tick.Rating</li>
+            <li>Onsite: @tick.OnSite</li>
+            <li>Send: @tick.Send</li>
+            <li>Number of Falls: @tick.NumFalls</li>
+            <li>Number of Attempts: @tick.NumAttempts</li>
+            <li>Number of Sends: @tick.NumSends</li>
+        </ul>
+    }
+</ul>
+
+@code {
+    private List<TickItem> ticks = new();
+    private string? crag;
+    private string? route;
+    private string? rating;
+    private bool? onSite;
+    private bool? send;
+    private int? numFalls {get; set;} = 0;
+    private int? numAttempts {get; set;} = 0;
+    private int? numSends {get; set;} = 0;
+
+    private void AddTick()
+    {
+        // Todo: Add the tick
+        ticks.Add(new TickItem {
+            Crag = crag,
+            Route = route,
+            Rating = rating,
+            OnSite = onSite,
+            Send = send,
+            NumFalls = numFalls,
+            NumAttempts = numAttempts,
+            NumSends = numSends
+        });
+
+        crag = string.Empty;
+        route = string.Empty;
+        rating = string.Empty;
+        send = false;
+        onSite = false;
+        numFalls = 0;
+        numAttempts = 0;
+        numSends = 0;
+
+    }
+}
